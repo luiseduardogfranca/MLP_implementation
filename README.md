@@ -1,2 +1,2 @@
 # MLP_implementation
-Multi Layer Perception 
+Multi Layer Perceptron 
