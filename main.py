@@ -1,17 +1,16 @@
 #-*- coding utf-8 -*-
-
 import numpy as np
 import matplotlib.pyplot as plt
-from data_process import cleanData
 import pandas as pd
+from data_process import train_features, train_labels
 
-#defining the activation function
-def sig(x, deriv=False):
-	if deriv == True:
-		return sig(x)*(1-sig(x))
-
+def sigmoid(x, deriv=False):
+	if deriv:
+		return sigmoid(x)*(1-sigmoid(x))
+	#1/1+e^-x
 	return 1/(1+np.exp(-x))
 
+<<<<<<< HEAD
 def LeakyReLU(x, deriv=False):
 	if deriv == True:
 		return 1. * (x >= 0) + (0.01*(x<0))
@@ -45,24 +44,36 @@ y = np.array([i for i in y[:int(percent*len(y))]])
 
 np.random.seed(1)
 
+=======
+>>>>>>> 476ed8e46a4069205d333111ba2cd92d0e3707ba
 #Number of neurons on input layer
-l0_len = x.shape[-1]
+l0_len = train_features.shape[-1]
 #Neurons on hidden layer
 l1_len = 60
 #Neurons on output layer
 l2_len = 2
 
+<<<<<<< HEAD
 eta = 0.00003
+=======
+#learning rate
+eta = 0.55
+>>>>>>> 476ed8e46a4069205d333111ba2cd92d0e3707ba
 
+np.random.seed(1)
 #defining weigths random
 #l0_len x l1_len
-w1 = 2*np.random.random((l0_len ,l1_len))-1
+# w1 = 2*np.random.random((l0_len, l1_len))-1
+w1 = np.random.uniform(-1,1,(l0_len, l1_len))
 
 #l1_len x l2_len
-w2 = 2*np.random.random((l1_len,l2_len))-1
+# w2 = 2*np.random.random((l1_len, l2_len))-1
+w2 = np.random.uniform(-1,1,(l1_len, l2_len))
 
+# print(np.random.random((l0_len, l1_len)))
 errors = []
 
+<<<<<<< HEAD
 i = 1
 
 for i in range(6000):
@@ -83,16 +94,52 @@ for i in range(6000):
 	l2_error = sig(l2, deriv=True)*l2_error
 
 	l1_error = LeakyReLU(l1, deriv=True)*(np.dot(l2_error,w2.T))
+=======
+def train():
+	global w1, w2, l0, errors
+	for i in range(20000):
+		l0 = train_features
 
-	l1_delta = eta*(l0.T.dot(l1_error))
-	l2_delta = eta*(l1.T.dot(l2_error))
+		l1 = sigmoid(l0.dot(w1))
 
-	w1 += l1_delta
-	w2 += l2_delta
+		l2 = sigmoid(l1.dot(w2))
 
+		error = train_labels-l2
+		# error = ((train_labels - l2)**2)*0.5
+
+		mean_error = np.mean(np.abs(error))
+		# print(mean_error)
+
+		if i%100 == 0:
+			# print(mean_error)
+			errors.append(mean_error)
+
+		l2_error = sigmoid(l2, deriv=True) * error
+
+		l1_error = sigmoid(l1, deriv=True) * (np.dot(l2_error, w2.T))
+>>>>>>> 476ed8e46a4069205d333111ba2cd92d0e3707ba
+
+		l1_delta = eta*(l0.T.dot(l1_error))
+		l2_delta = eta*(l1.T.dot(l2_error))
+
+		w1 += l1_delta
+		w2 += l2_delta
+
+<<<<<<< HEAD
 df1 = pd.DataFrame(data=w1)
 df2 = pd.DataFrame(data=w2)
 result = pd.DataFrame(data=errors)
 result.to_csv('/output/result.csv', sep=',', encoding='utf-8', index=False)
 df1.to_csv('/output/w1.csv',sep=',',encoding='utf-8',index=False)
 df2.to_csv('/output/w2.csv',sep=',',encoding='utf-8',index=False)
+=======
+#
+# w1 = pd.DataFrame(data = w1)
+# w2 = pd.DataFrame(data = w2)
+#
+# w1.to_csv('new-w1.csv',sep=',',encoding='utf-8',index=False)
+# w1.to_csv('new-w2.csv',sep=',',encoding='utf-8',index=False)
+
+# plt.plot(list(range(len(errors))), errors)
+# plt.show()
+>>>>>>> 476ed8e46a4069205d333111ba2cd92d0e3707ba
