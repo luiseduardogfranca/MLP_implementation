@@ -36,10 +36,10 @@
 # # for i in range(len(cleanData)//int(percent_test)):
 # # 	x = np.array([i for i in x[:int(percent*len(x))]])
 # # 	y = np.array([i for i in y[:int(percent*len(y))]])
-from main import w1, w2, train, saveSVG, printGraph
+from main import w1, w2, train, saveSVG, printGraph, neuralNetworkSimulation
 
 print("\n======== Implemenatation MLP - Neural Network========\n")
-print("1 - Train neural network \n2 - Print weight of neural network \n3 - Show graphic of training \n4 - Save weights as \n0 - Sair \n")
+print("1 - Train neural network \n2 - Print weight of neural network \n3 - Show graphic of training \n4 - Save weights as \n5 - Neural Network Simulation \n0 - Sair \n")
 
 option = input("Option: ")
 
@@ -65,11 +65,17 @@ while (option != "0"):
 
 		saveSVG(nameFirstLayer, nameSecondLayer)
 
+	elif(option == "5"):
+		neuralNetworkSimulation()
+
 	else:
 		print("Invalid option")
 
+
+
 	print("\n======== Implemenatation MLP - Neural Network========\n")
-	print("1 - Train neural network \n2 - Print weight of neural network \n3 - Show graphic of training \n4 - Save weights as \n0 - Sair \n")
+	print("1 - Train neural network \n2 - Print weight of neural network \n3 - Show graphic of training \n4 - Save weights as \n5 - Neural Network Simulation \n0 - Sair \n")
+
 	option = input("Option: ")
 
 print("\n======== Finalized ========")

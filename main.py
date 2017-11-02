@@ -3,6 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 import sys
+import webview
 from data_process import train_features, train_labels
 
 def sigmoid(x, deriv=False):
@@ -46,6 +47,8 @@ errors = []
 
 def train(amountRepetition = 20000):
 	global w1, w2, l0, errors
+
+	errors = []
 
 	# 1% and 10%
 	percent_one = amountRepetition * 0.01
@@ -112,8 +115,13 @@ def saveSVG(fileName1, fileName2):
 
 def printGraph():
 	global plt
+	print(errors)
 	plt.plot(list(range(len(errors))), errors)
 	plt.show()
+
+def neuralNetworkSimulation():
+	webview.create_window("Neural Network","https://luiseduardogfranca.github.io/neural-network/neural-network.html")
+
 
 
 

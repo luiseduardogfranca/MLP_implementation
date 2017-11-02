@@ -1,0 +1,5 @@
+pandas
+pywebview
+PyQt5
+matplotlib
+numpy
