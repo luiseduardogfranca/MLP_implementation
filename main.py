@@ -2,6 +2,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
+import sys
 from data_process import train_features, train_labels
 
 def sigmoid(x, deriv=False):
@@ -10,42 +11,14 @@ def sigmoid(x, deriv=False):
 	#1/1+e^-x
 	return 1/(1+np.exp(-x))
 
-<<<<<<< HEAD
 def LeakyReLU(x, deriv=False):
 	if deriv == True:
 		return 1. * (x >= 0) + (0.01*(x<0))
 	return ((x < 0 )*(0.01*x)) + ((x >= 0)*x)
 
-#spliting labels and features
-x = [i[:-1] for i in cleanData]
-y = [i[-1] for i in cleanData]
-
-bias = np.ones(len(x))
-
-x = np.array(x)
-y = np.array(y)
-
-temp = []
-
-for i in y:
-	temp.append([1,0]) if i == 2 else temp.append([0,1])
-
-y = np.array(temp)
-
-#Adding the bias term
-x = np.c_[x, bias]
-
-percent = 0.9
-
-x = np.array([i for i in x[:int(percent*len(x))]])
-x_test = np.array([i for i in x[int((1-percent)*len(x)):]])
-
-y = np.array([i for i in y[:int(percent*len(y))]])
 
 np.random.seed(1)
 
-=======
->>>>>>> 476ed8e46a4069205d333111ba2cd92d0e3707ba
 #Number of neurons on input layer
 l0_len = train_features.shape[-1]
 #Neurons on hidden layer
@@ -53,12 +26,10 @@ l1_len = 60
 #Neurons on output layer
 l2_len = 2
 
-<<<<<<< HEAD
 eta = 0.00003
-=======
+
 #learning rate
 eta = 0.55
->>>>>>> 476ed8e46a4069205d333111ba2cd92d0e3707ba
 
 np.random.seed(1)
 #defining weigths random
@@ -73,31 +44,20 @@ w2 = np.random.uniform(-1,1,(l1_len, l2_len))
 # print(np.random.random((l0_len, l1_len)))
 errors = []
 
-<<<<<<< HEAD
-i = 1
-
-for i in range(6000):
-	l0 = x
-	#calculating the hide layer output
-	l1 = LeakyReLU(l0.dot(w1))
-	#calculating the output layer result
-	l2 = sig(l1.dot(w2))
-	#abosulte error
-	l2_error = y - l2
-
-	mean_error = np.mean(np.abs(l2_error))
-
-	if i%100 == 0:
-		print(mean_error)
-		errors.append(mean_error)
-
-	l2_error = sig(l2, deriv=True)*l2_error
-
-	l1_error = LeakyReLU(l1, deriv=True)*(np.dot(l2_error,w2.T))
-=======
-def train():
+def train(amountRepetition = 20000):
 	global w1, w2, l0, errors
-	for i in range(20000):
+
+	# 1% and 10%
+	percent_one = amountRepetition * 0.01
+	percent_ten = amountRepetition * 0.1
+
+	count_one_percent = 0
+	count_ten_percent = 0
+
+	char_load = ("#" * count_ten_percent)
+	char_blankspace = (" " * (10 - count_ten_percent))
+
+	for i in range(1, amountRepetition + 1):
 		l0 = train_features
 
 		l1 = sigmoid(l0.dot(w1))
@@ -117,7 +77,6 @@ def train():
 		l2_error = sigmoid(l2, deriv=True) * error
 
 		l1_error = sigmoid(l1, deriv=True) * (np.dot(l2_error, w2.T))
->>>>>>> 476ed8e46a4069205d333111ba2cd92d0e3707ba
 
 		l1_delta = eta*(l0.T.dot(l1_error))
 		l2_delta = eta*(l1.T.dot(l2_error))
@@ -125,21 +84,38 @@ def train():
 		w1 += l1_delta
 		w2 += l2_delta
 
-<<<<<<< HEAD
-df1 = pd.DataFrame(data=w1)
-df2 = pd.DataFrame(data=w2)
-result = pd.DataFrame(data=errors)
-result.to_csv('/output/result.csv', sep=',', encoding='utf-8', index=False)
-df1.to_csv('/output/w1.csv',sep=',',encoding='utf-8',index=False)
-df2.to_csv('/output/w2.csv',sep=',',encoding='utf-8',index=False)
-=======
-#
-# w1 = pd.DataFrame(data = w1)
-# w2 = pd.DataFrame(data = w2)
-#
-# w1.to_csv('new-w1.csv',sep=',',encoding='utf-8',index=False)
-# w1.to_csv('new-w2.csv',sep=',',encoding='utf-8',index=False)
+		#progress bar
+		if(i % percent_one == 0): #while percent is equal to 1%
+			count_one_percent += 1
+
+			if(i % percent_ten == 0): #while percent is equal to 10%
+				count_ten_percent += 1
+				char_load = ("#" * count_ten_percent)
+				char_blankspace = (" " * (10 - count_ten_percent))
+
+			loading = ("[%s%s]%d%%" %(char_load, char_blankspace, count_one_percent))
+			sys.stdout.write(loading)
+			sys.stdout.flush()
+
+			if(count_one_percent != 100):
+			    sys.stdout.write("\b" * (13 + len(str(i))))
+
+
+def saveSVG(fileName1, fileName2):
+	global w1, w2
+
+	df1 = pd.DataFrame(data=w1)
+	df2 = pd.DataFrame(data=w2)
+
+	df1.to_csv('weights/' + fileName1,sep=',',encoding='utf-8',index=False)
+	df2.to_csv('weights/' + fileName2,sep=',',encoding='utf-8',index=False)
+
+def printGraph():
+	global plt
+	plt.plot(list(range(len(errors))), errors)
+	plt.show()
+
+
 
 # plt.plot(list(range(len(errors))), errors)
 # plt.show()
->>>>>>> 476ed8e46a4069205d333111ba2cd92d0e3707ba
