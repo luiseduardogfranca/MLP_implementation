@@ -74,7 +74,7 @@ while (option != "0"):
 
 
 	print("\n======== Implemenatation MLP - Neural Network========\n")
-	print("1 - Train neural network \n2 - Print weight of neural network \n3 - Show graphic of training \n4 - Save weights as \n5 - Neural Network Simulation \n0 - Sair \n")
+	print("1 - Train neural network \n2 - Print weight of neural network \n3 - Show graphic of training \n4 - Save weights as \n5 - Neural Network Simulation \n0 - Exit \n")
 
 	option = input("Option: ")
 

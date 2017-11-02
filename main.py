@@ -115,7 +115,6 @@ def saveSVG(fileName1, fileName2):
 
 def printGraph():
 	global plt
-	print(errors)
 	plt.plot(list(range(len(errors))), errors)
 	plt.show()
 
