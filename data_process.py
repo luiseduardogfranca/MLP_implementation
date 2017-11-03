@@ -55,17 +55,19 @@ for i in range(len(data.BN)):
 
 # print(data.shape)
 # print(cleanData.shape)
+
 cleanData.BN = cleanData.BN.astype('int64')
 cleanData = cleanData[['CT','M','BN','BC','C']]
 cleanDataAll = cleanData
+
 # cleanData = cleanData.values
-cleanData = cleanData.values.tolist()
+cleanData = np.array(cleanData.values.tolist())
 cleanDataAll = cleanDataAll.values.tolist()
 
 def split_data(percent, cleanData):
     data_len = len(cleanData)
     cleanData = np.array(cleanData)
-    
+
 
     train = cleanData[:int(percent*data_len), :]
     test = cleanData[int(percent*data_len):, :]
@@ -85,7 +87,7 @@ def split_data(percent, cleanData):
         temp.append([1,0]) if i == 2 else temp.append([0,1])
 
     test_labels = np.array(temp)
-    
+
 
     bias = np.ones(len(train))
     train_features = train[:, :-1]
@@ -106,4 +108,3 @@ train_features, train_labels, test_features, test_labels = split_data(0.9, clean
 #         cleanData[i][-1] = [1,0]
 #     else:
 #         cleanData[i][-1] = [0,1]
-

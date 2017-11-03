@@ -1,4 +1,6 @@
-def sig(x, deriv=False):
+import numpy as np
+
+def sigmoid(x, deriv=False):
 	if deriv == True:
 		return sig(x)*(1-sig(x))
 
