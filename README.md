@@ -30,3 +30,8 @@ Mitoses                      | M
   
 ### Usage
     python3 test.py
+    
+* **Colaborators**
+  * [Émerson Silva](https://github.com/SilvaEmerson)
+  * [Luís Eduardo](https://github.com/luiseduardogfranca) 
+
