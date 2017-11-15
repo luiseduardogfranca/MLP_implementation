@@ -1,4 +1,4 @@
-# Breast Cancer classification with Neural Network Artifical 
+# Breast Cancer classification with Artifical Neural Network  
 
 ### What is Neural Network?
 Artificial neural networks are computing systems inspired by the biological neural networks that constitute animal brain. 
